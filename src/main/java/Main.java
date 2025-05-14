@@ -34,8 +34,10 @@ class Main {
                     default: return;
                 }
             } catch(InputMismatchException e) { 
-                System.out.println("Błędny wybór menu (nie wybrano cyfry).");
+                System.out.println("Błędny wybór menu (litera zamiast cyfry).");
                 scan.nextLine(); 
+            } catch(IllegalArgumentException e) { 
+                System.out.println("Błędny wybór menu! Wybierz liczbę z zakresu 0-3.");
             } catch(IOException e) {
 
             } catch(WrongStudentName e) {
@@ -54,7 +56,15 @@ class Main {
         System.out.println("2 - aby wypisać wszystkich studentów");
         System.out.println("3 - aby wyszukać studenta po imieniu");
         System.out.println("0 - aby wyjść z programu");
-        return scan.nextInt();
+
+        int choice = scan.nextInt();
+
+        
+        if(choice < 0 || choice > 3) {
+            throw new IllegalArgumentException();
+        }
+
+        return choice;
     }
 
     public static String ReadName() throws WrongStudentName {
@@ -101,6 +111,7 @@ class Main {
         }
     }
 }
+
 
 
 
