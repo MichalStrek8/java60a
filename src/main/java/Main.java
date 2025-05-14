@@ -13,11 +13,12 @@ Poniższe zadania będą się sprowadzały do modyfikacji bazowego kodu. Proces 
 //Niepoprawny wiek – gdy jest mniejszy od 0 lub większy niż 100. Niepoprawna data urodzenia – gdy nie jest zapisana w formacie DD-MM-YYYY, np. 28-02-2023.
 
 import java.io.IOException;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 class WrongStudentName extends Exception { }
 class WrongAge extends Exception { }
-class WrongDateOfBirth extends Exception { } 
+class WrongDateOfBirth extends Exception { }
 
 class Main {
     public static Scanner scan = new Scanner(System.in);
@@ -32,13 +33,16 @@ class Main {
                     case 3: exercise3(); break;
                     default: return;
                 }
+            } catch(InputMismatchException e) { 
+                System.out.println("Błędny wybór menu (nie wybrano cyfry).");
+                scan.nextLine(); 
             } catch(IOException e) {
 
             } catch(WrongStudentName e) {
                 System.out.println("Błędne imię studenta!");
             } catch(WrongAge e) {
                 System.out.println("Błędny wiek studenta! Wiek musi być z zakresu 1-99.");
-            } catch(WrongDateOfBirth e) { 
+            } catch(WrongDateOfBirth e) {
                 System.out.println("Błędna data urodzenia! Format musi być DD-MM-YYYY.");
             }
         }
@@ -72,7 +76,7 @@ class Main {
         scan.nextLine();
         System.out.println("Podaj datę urodzenia DD-MM-YYYY");
         var date = scan.nextLine();
-        if(!date.matches("\\d{2}-\\d{2}-\\d{4}")) 
+        if(!date.matches("\\d{2}-\\d{2}-\\d{4}"))
             throw new WrongDateOfBirth();
         (new Service()).addStudent(new Student(name, age, date));
     }
@@ -97,5 +101,6 @@ class Main {
         }
     }
 }
+
 
 
